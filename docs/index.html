@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>README — Vista HTML</title>
+    <style>
+        :root{
+            --bg:#fff;
+            --text:#24292e;
+            --muted:#6a737d;
+            --code-bg:#f6f8fa;
+            --accent:#0366d6;
+            --border:#e1e4e8;
+            --container-width:780px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            line-height:1.6;
+        }
+        html,body{background:var(--bg);color:var(--text);margin:0;padding:24px;}
+        .wrap{max-width:var(--container-width);margin:0 auto;padding:32px;border-radius:6px;border:1px solid var(--border);box-shadow:0 1px 3px rgba(27,31,35,0.04);background:linear-gradient(#fff,#fbfdff);}
+        h1{font-size:2.25rem;margin:0 0 0.5rem;}
+        h2{font-size:1.5rem;margin:1.25rem 0 0.5rem;border-bottom:1px solid var(--border);padding-bottom:0.3rem;}
+        h3{font-size:1.125rem;margin:1rem 0 0.25rem;}
+        p{margin:0.5rem 0;}
+        a{color:var(--accent);text-decoration:none;}
+        a:hover{text-decoration:underline;}
+        blockquote{margin:0.8rem 0;padding:0.5rem 1rem;color:var(--muted);border-left:4px solid var(--border);background:#fbfbfb;border-radius:4px;}
+        pre, code{font-family:SFMono-Regular,Consolas,"Liberation Mono",Menlo,monospace;font-size:0.9rem;}
+        code{background:var(--code-bg);padding:0.2rem 0.35rem;border-radius:6px;border:1px solid var(--border);}
+        pre{background:var(--code-bg);padding:1rem;border-radius:6px;overflow:auto;border:1px solid var(--border);margin:0.75rem 0;}
+        ul,ol{margin:0.4rem 0 0.4rem 1.25rem;}
+        li{margin:0.25rem 0;}
+        strong{font-weight:600;}
+        em{font-style:italic;color:var(--muted);}
+        table{width:100%;border-collapse:collapse;margin:0.75rem 0;}
+        th,td{border:1px solid var(--border);padding:0.4rem 0.6rem;text-align:left;}
+        .muted{color:var(--muted);font-size:0.95rem;}
+        footer{margin-top:1.25rem;font-size:0.85rem;color:var(--muted);}
+        .note{background:#fffbe6;border:1px solid #ffecb3;padding:0.5rem;border-radius:6px;margin:0.75rem 0;}
+        .loading{color:var(--muted);font-size:0.95rem;}
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div id="content">
+        <p class="loading">Cargando `README.md` y convirtiendo Markdown a HTML... si no aparece contenido, copie el Markdown en el editor o despliegue el archivo desde un servidor local.</p>
+    </div>
+    <footer>Vista generada automáticamente · Plantilla CSS para estilos Markdown</footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+    // Intenta cargar `README.md` desde el mismo directorio y convertirlo con marked.
+    (async function(){
+        try{
+            const res = await fetch('../README.md');
+            if(!res.ok) throw new Error('No se pudo cargar README.md');
+            const md = await res.text();
+            const html = marked.parse(md, {mangle:false, headerIds:true});
+            document.getElementById('content').innerHTML = html;
+        }catch(err){
+            // Si falla el fetch (por ejemplo por restricciones de archivo local), muestra instrucciones.
+            document.getElementById('content').innerHTML =
+                '<div class="note"><strong>Instrucciones:</strong> Coloque `README.html` en el mismo directorio que `README.md` y abra el archivo desde un servidor local (por ejemplo: `python -m http.server` desde la carpeta). ' +
+                'Alternativamente pegue el Markdown manualmente en el HTML convertido.</div>';
+            console.warn(err);
+        }
+    })();
+</script>
+</body>
+</html>
